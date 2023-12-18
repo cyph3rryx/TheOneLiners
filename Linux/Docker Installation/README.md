@@ -1,51 +1,50 @@
 # Docker Installation
 
-This script automates the installation of Docker Engine on Ubuntu-based systems. Follow the steps below to ensure a smooth installation process.
+This repository contains scripts and instructions for installing Docker Engine, creating a Dockerfile, building a Docker image, and running a Docker container. The provided scripts are designed for Ubuntu 22.04 LTS.
+
+## Scripts
+
+### [1] Installing Docker Engine.sh
+
+This script automates the installation of Docker Engine on Ubuntu 22.04 LTS. It performs the following steps:
+
+- Update package repositories
+- Install required dependencies
+- Configure Docker repository and GPG key
+- Install Docker Engine, CLI, containerd.io, docker-buildx-plugin, and docker-compose-plugin
+- Add the user "htb-student" to the Docker group
+- Display a reminder to log out and log back in for group changes to take effect
+- Test Docker installation with a "hello-world" container
+
+To use the script, run:
+
+```bash
+./Docker\ Engine\ Install.sh
+```
+
+### [2] Docker File.sh
+
+This script creates a Dockerfile for building a Docker image based on Ubuntu 22.04 LTS. The Dockerfile sets up Apache2 and OpenSSH, creates a user named "docker-user" with a password, and grants the user access to Apache and SSH services.
+
+### [3] Docker Build.sh
+
+This script builds a Docker image using the Dockerfile created in [2]. It tags the image as "FS_docker." To build the Docker image, run:
+
+```bash
+./Docker\ Build.sh
+```
+
+### [4] Docker Run.sh
+
+This script runs a Docker container based on the previously built image. It maps host ports to container ports and runs the container in detached mode. Modify the script to specify the desired host port, container port, and container name.
+
+```bash
+./Docker\ Run.sh
+```
 
 ## Usage
 
-1. **Preparation**: Update package lists and install necessary dependencies.
-
-    ```bash
-    sudo apt update -y
-    sudo apt install ca-certificates curl gnupg lsb-release -y
-    sudo mkdir -m 0755 -p /etc/apt/keyrings
-    ```
-
-2. **Add Docker GPG Key**: Download and add the Docker GPG key to the system.
-
-    ```bash
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    ```
-
-3. **Add Docker Repository**: Add the Docker repository to the list of package sources.
-
-    ```bash
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    ```
-
-4. **Install Docker Engine**: Update package lists again and install Docker Engine, Docker CLI, Containerd, Docker Buildx, and Docker Compose.
-
-    ```bash
-    sudo apt update -y
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-    ```
-
-5. **Add User to Docker Group**: Add the current user to the Docker group to run Docker commands without sudo. Note that you need to log out and log back in for the group changes to take effect.
-
-    ```bash
-    sudo usermod -aG docker $USER
-    echo '[!] You need to log out and log back in for the group changes to take effect.'
-    ```
-
-6. **Test Docker Installation**: Run a simple Docker container to verify the successful installation.
-
-    ```bash
-    docker run hello-world
-    ```
-
-## Notes
-
-- This script is designed for Ubuntu-based systems.
-- Ensure that you have the necessary permissions to execute the script.
-- Make sure to follow the usermod instructions to apply group changes.
+1. Execute [1] Installing Docker Engine.sh to install Docker Engine.
+2. Create a Dockerfile using [2] Docker File.sh.
+3. Build a Docker image with [3] Docker Build.sh.
+4. Run a Docker container using [4] Docker Run.sh.
